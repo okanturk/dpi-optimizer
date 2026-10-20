@@ -1,8 +1,17 @@
+[variables]
+NODE_ENV = "production"
+# Vite is detected as an SPA and would otherwise be served statically by Caddy,
+# which drops the Express API (/api/auth/*).
+NIXPACKS_SPA_CADDY = "false"
+
 [phases.setup]
 nixPkgs = ["nodejs_22", "npm-10_x"]
 
 [phases.install]
-cmds = ["npm install --include=optional"]
+cmds = ["npm ci --include=optional"]
 
 [phases.build]
 cmds = ["npm run build"]
+
+[start]
+cmd = "node dist-server/server.cjs"
